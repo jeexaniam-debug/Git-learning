@@ -1,0 +1,80 @@
+"""
+Simple Calculator
+-----------------
+A command-line calculator supporting basic arithmetic operations.
+Run it directly: python calculator.py
+"""
+ 
+ 
+def add(a, b):
+    return a + b
+ 
+ 
+def subtract(a, b):
+    return a - b
+ 
+ 
+def multiply(a, b):
+    return a * b
+ 
+ 
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError("Cannot divide by zero.")
+    return a / b
+ 
+ 
+OPERATIONS = {
+    "1": ("Add", add),
+    "2": ("Subtract", subtract),
+    "3": ("Multiply", multiply),
+    "4": ("Divide", divide),
+}
+ 
+ 
+def get_number(prompt):
+    """Keep asking until the user enters a valid number."""
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("That's not a valid number. Try again.")
+ 
+ 
+def show_menu():
+    print("\n===== Simple Calculator =====")
+    for key, (name, _) in OPERATIONS.items():
+        print(f"{key}. {name}")
+    print("5. Exit")
+    print("==============================")
+ 
+ 
+def main():
+    print("Welcome to the Simple Calculator!")
+ 
+    while True:
+        show_menu()
+        choice = input("Choose an operation (1-5): ").strip()
+ 
+        if choice == "5":
+            print("Goodbye!")
+            break
+ 
+        if choice not in OPERATIONS:
+            print("Invalid choice. Please select a number from 1 to 5.")
+            continue
+ 
+        name, operation = OPERATIONS[choice]
+        num1 = get_number("Enter first number: ")
+        num2 = get_number("Enter second number: ")
+ 
+        try:
+            result = operation(num1, num2)
+            print(f"\nResult: {num1} {name.lower()} {num2} = {result}")
+        except ZeroDivisionError as e:
+            print(f"Error: {e}")
+ 
+ 
+if __name__ == "__main__":
+    main()
+ 
